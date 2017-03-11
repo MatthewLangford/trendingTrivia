@@ -1,87 +1,106 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="triviaApp">
 
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="/styles/reset.css">
-  <link rel="stylesheet" href="/styles/main.css">
   <title>Trivia Trends</title>
   <link rel="shortcut icon" href="/styles/assets/crownFavicon.png">
+  <link rel="stylesheet" href="styles/reset.css">
+  <link rel="stylesheet" href="styles/main.css">
+
 </head>
 
-<body>
-  <header>
-    <div></div>
-    <h1>Trivia Trends</h1>
-    <button><span>+</span> Add Question</button>
-  </header>
-  <article>
-    <nav>
-      <a>All Questions</a>
-      <a>Easy</a>
-      <a>Medium</a>
-      <a>Hard</a>
-      <a>Search by Animal</a>
-    </nav>
-    <div class="search">
-      <input type="text" placeholder="Animal to search by">
+<body ng-controller="triviaController">
+<header>
+  <div></div>
+  <h1>Trivia Trends</h1>
+  <button><span>+</span> Add Question</button>
+</header>
+<article>
+  <nav>
+    <a>All Questions</a>
+    <a>Easy</a>
+    <a>Medium</a>
+    <a>Hard</a>
+    <a>Search by Animal</a>
+  </nav>
+  <div class="search">
+    <input type="text" placeholder="Animal to search by">
+    <button ng-click="nextPage()">Next</button>
+    <button ng-click="prevPage()"> Previous</button>
+  </div>
+  <div ng-class="correct ? 'green': 'red'" ng-repeat="q in questions" class="question-wrapper">
+
+    <h3>{{q.question}}</h3>
+    <div >{{q.difficulty}}</div>
+    <div class="gear" >
+      <img src="styles/assets/gear.svg" alt="">
     </div>
+    <ul>
+      <li ng-repeat="o in q.options"> <!-- Repeated for each option -->
+        <input ng-click="check($parent.$index, $index)" type="radio">
+        <label >{{o}}</label>
+      </li>
+    </ul>
 
-    <!-- Questions go here -->
-
-  </article>
-
-  <div class="modal">
-    <form>
-      <h4 class="close">X</h4>
-      <span>Question</span><input type="text" ng-model="<!-- Question -->">
-      <span>Animal it's about</span><input type="text" ng-model="<!-- Animal -->">
-      <span>Difficulty</span>
-      <div class="range">
-        <input type="range" min="1" max="3" ng-model="<!-- Difficulty -->">
-
-        <h5>{{newQuestion.difficulty}}</h5>
-      </div>
-      <h4>Options</h4>
-      <div>
-        <input type="radio" ng-model="" value="1">
-        <input type="text" ng-model="">
-      </div>
-      <div>
-        <input type="radio" ng-model="" value="2">
-        <input type="text" ng-model="">
-      </div>
-      <div>
-        <input type="radio" ng-model="" value="3">
-        <input type="text" ng-model="">
-      </div>
-      <div>
-        <input type="radio" ng-model="" value="4">
-        <input type="text" ng-model="">
-      </div>
-
-      <!--Add question buttons-->
-      <div class="buttons">
-        <button class="green">Save Question</button>
-        <button>Cancel</button>
-      </div>
-
-      <!--Edit & Delete question buttons-->
-      <div class="buttons">
-        <button class="red">Delete Question</button>
-        <button class="green">Save Changes</button>
-        <button>Cancel</button>
-      </div>
-
-    </form>
   </div>
 
+</article>
+
+<div class="modal">
+  <form>
+    <h4 class="close">X</h4>
+    <span>Question</span><input type="text" ng-model="Question">
+    <span>Animal it's about</span><input type="text" ng-model="Animal">
+    <span>Difficulty</span>
+    <div class="range">
+      <input type="range" min="1" max="3" ng-model="Difficulty">
+
+      <h5>{{newQuestion.difficulty}}</h5>
+    </div>
+    <h4>Options</h4>
+    <div>
+      <input type="radio" ng-model="dfdf" value="1">
+      <input type="text" ng-model="dfdf">
+    </div>
+    <div>
+      <input type="radio" ng-model="dfdf" value="2">
+      <input type="text" ng-model="dfdf">
+    </div>
+    <div>
+      <input type="radio" ng-model="dfdf" value="3">
+      <input type="text" ng-model="dfdf">
+    </div>
+    <div>
+      <input type="radio" ng-model="dfdf" value="4">
+      <input type="text" ng-model="dfdf">
+    </div>
+
+    <!--Add question buttons-->
+    <div class="buttons">
+      <button class="green">Save Question</button>
+      <button>Cancel</button>
+    </div>
+
+    <!--Edit & Delete question buttons-->
+    <div class="buttons">
+      <button class="red">Delete Question</button>
+      <button class="green">Save Changes</button>
+      <button>Cancel</button>
+    </div>
+
+  </form>
+</div>
 
 
 
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.js" charset="utf-8"></script>
-  <script src="./app.js" charset="utf-8"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.js" charset="utf-8"></script>
+<script src="js/app.js" charset="utf-8"></script>
+<script src="js/triviaController.js"></script>
+<script src="js/triviaService.js"></script>
+
 </body>
 
 </html>

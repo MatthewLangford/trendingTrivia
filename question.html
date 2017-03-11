@@ -1,6 +1,6 @@
-<div class="question-wrapper">
+<div  ng-repeat="q in questions" class="question-wrapper">
 
-<h3><!-- Question --></h3>
+<h3>{{q.question}}</h3>
 <div ><!-- Difficulty --></div>
 <div class="gear" >
   <img src="/styles/assets/gear.svg" alt="">
