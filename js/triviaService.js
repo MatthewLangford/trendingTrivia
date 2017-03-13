@@ -5,6 +5,14 @@ angular.module('triviaApp').service('triviaService', function ($http) {
             method: 'GET',
             url: 'https://practiceapi.devmountain.com/api/trivia/questions?page=' + num
         });
-    }
+    };
+
+    this.addQuestion = function (question) {
+        return $http({
+            method: 'POST',
+            url: 'https://practiceapi.devmountain.com/api/trivia/questions/',
+            data: {quest: question}
+        });
+    };
 
 });

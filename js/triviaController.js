@@ -1,28 +1,49 @@
 angular.module('triviaApp').controller('triviaController', function ($scope, triviaService) {
 
-    $scope.currentPage = 0;
-        $scope.check = function (pind,ind) {
-           if ($scope.questions[pind]['correct_answer'] === ind)
-            console.log(true)
-            $scope.correct = true;
+        $scope.addButton = true;
+        $scope.currentPage = 0;
+
+        $scope.correct = 'white';
+
+        $scope.changeLabel = function () {
+            console.log($scope.label)
+            $scope.label = 1;
+            console.log($scope.label);
+        };
+        $scope.getQuestions = function() {
+            triviaService.getQuestions($scope.currentPage).then(function (response) {
+                $scope.questions = response.data;
+                console.log($scope.questions)
+            });
         };
 
-        triviaService.getQuestions($scope.currentPage).then(function (response) {
-            $scope.questions = response.data;
-            console.log($scope.questions)
-        });
+        $scope.addQuestion = function (question) {
+            triviaService.addQuestion(question).then(function (responsse) {
+
+            });
+        };
+
+
+        $scope.getQuestions();
 
         $scope.nextPage = function () {
             $scope.currentPage++;
-            triviaService.getQuestions($scope.currentPage).then(function (response) {
-                $scope.questions = response.data;
-            });
+            $scope.getQuestions();
         };
 
         $scope.prevPage = function () {
             $scope.currentPage--;
-            triviaService.getQuestions($scope.currentPage).then(function (response) {
-            $scope.questions = response.data;
-        });
-    }
+            $scope.getQuestions();
+        };
+
+
+    $scope.checkAnswer = function (pInd,ind) {
+        if($scope.questions[pInd].correct_answer === ind){
+            $scope.correct = 'green';
+        }else{
+            $scope.correct = 'red';
+        }
+    };
+
+
 });

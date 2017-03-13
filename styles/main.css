@@ -144,6 +144,10 @@ label, input[type="radio"], input[type="range"] {
   cursor: pointer;
 }
 
+.nextBack{
+  background-color: rgb(1, 206, 241);
+  border: rgb(1, 206, 241) 1px solid;
+}
 .modal {
   position: fixed;
   top: 0;
@@ -152,7 +156,7 @@ label, input[type="radio"], input[type="range"] {
   width: 100vw;
   background: rgba(88, 88, 88, 0.55);
   display: flex;
-  display: none; /* ALERTDELETEME - REMOVE THIS line only WHEN STYLING THE MODAL*/
+  /*display: none; /* ALERTDELETEME - REMOVE THIS line only WHEN STYLING THE MODAL*/
   justify-content: center;
   align-items: center;
 }
@@ -227,4 +231,7 @@ input[type="range"] {
 }
 .red {
   background: rgb(218, 45, 123);
+}
+.white{
+  background-color: #fff;
 }

@@ -7,39 +7,43 @@
   <link rel="shortcut icon" href="/styles/assets/crownFavicon.png">
   <link rel="stylesheet" href="styles/reset.css">
   <link rel="stylesheet" href="styles/main.css">
-
 </head>
 
 <body ng-controller="triviaController">
 <header>
   <div></div>
   <h1>Trivia Trends</h1>
-  <button><span>+</span> Add Question</button>
+  <button ng-click="addButton = !addButton"><span>+</span> Add Question</button>
 </header>
 <article>
   <nav>
-    <a>All Questions</a>
-    <a>Easy</a>
-    <a>Medium</a>
-    <a>Hard</a>
-    <a>Search by Animal</a>
+    <a ng-click="diff = undefined">All Questions</a>
+    <a ng-click="diff.difficulty = 1">Easy</a>
+    <a ng-click="diff.difficulty = 2">Medium</a>
+    <a ng-click="diff.difficulty = 3">Hard</a>
+    <a ng-click="diff.animal = searchByAnimal">Search by Animal</a>
   </nav>
   <div class="search">
-    <input type="text" placeholder="Animal to search by">
-    <button ng-click="nextPage()">Next</button>
-    <button ng-click="prevPage()"> Previous</button>
+    <input ng-keypress="$event.keyCode === 13 ? diff.animal = searchByAnimal: null" ng-model="searchByAnimal" type="text" placeholder="Animal to search by">
+    <button class="nextBack" ng-click="prevPage()"> Previous</button>
+    <button class="nextBack" ng-click="nextPage()">Next</button>
   </div>
-  <div ng-class="correct ? 'green': 'red'" ng-repeat="q in questions" class="question-wrapper">
-
+  <div ng-repeat="q in questions | filter: diff" ng-click="changeLabel()" class="question-wrapper" >
+      {{label}}
     <h3>{{q.question}}</h3>
-    <div >{{q.difficulty}}</div>
-    <div class="gear" >
+    <div class="green" ng-show="q.difficulty === 1">Easy</div>
+    <div class="yellow" ng-show="q.difficulty === 2">Medium</div>
+    <div class="red" ng-show="q.difficulty === 3">Hard</div>
+    <div class="gear">
       <img src="styles/assets/gear.svg" alt="">
     </div>
     <ul>
       <li ng-repeat="o in q.options"> <!-- Repeated for each option -->
-        <input ng-click="check($parent.$index, $index)" type="radio">
-        <label >{{o}}</label>
+
+        <label ng-model="label = 5">
+          {{label}}
+          {{o}}
+        </label>
       </li>
     </ul>
 
@@ -47,9 +51,9 @@
 
 </article>
 
-<div class="modal">
+<div ng-hide="addButton" class="modal">
   <form>
-    <h4 class="close">X</h4>
+    <h4 ng-click="addButton = !addButton" class="close">X</h4>
     <span>Question</span><input type="text" ng-model="Question">
     <span>Animal it's about</span><input type="text" ng-model="Animal">
     <span>Difficulty</span>
