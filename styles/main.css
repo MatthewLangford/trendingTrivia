@@ -235,3 +235,12 @@ input[type="range"] {
 .white{
   background-color: #fff;
 }
+.darkRed:focus{
+  background-color: #96314B;
+}
+.darkGreen:focus{
+  background: rgb(69, 138, 78);
+}
+md-option:focus{
+  background-color: black;
+}

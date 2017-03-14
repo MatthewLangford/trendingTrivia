@@ -10,8 +10,8 @@ angular.module('triviaApp').service('triviaService', function ($http) {
     this.addQuestion = function (question) {
         return $http({
             method: 'POST',
-            url: 'https://practiceapi.devmountain.com/api/trivia/questions/',
-            data: {quest: question}
+            url: 'https://practiceapi.devmountain.com/api/trivia/questions',
+            data: question
         });
     };
 

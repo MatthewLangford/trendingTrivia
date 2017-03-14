@@ -2,14 +2,9 @@ angular.module('triviaApp').controller('triviaController', function ($scope, tri
 
         $scope.addButton = true;
         $scope.currentPage = 0;
+        $scope.edit = true;
 
-        $scope.correct = 'white';
 
-        $scope.changeLabel = function () {
-            console.log($scope.label)
-            $scope.label = 1;
-            console.log($scope.label);
-        };
         $scope.getQuestions = function() {
             triviaService.getQuestions($scope.currentPage).then(function (response) {
                 $scope.questions = response.data;
@@ -18,11 +13,12 @@ angular.module('triviaApp').controller('triviaController', function ($scope, tri
         };
 
         $scope.addQuestion = function (question) {
-            triviaService.addQuestion(question).then(function (responsse) {
-
+            triviaService.addQuestion(question).then(function (response) {
+                $scope.questions = response.data;
+                $scope.addButton = !$scope.addButton;
+                console.log($scope.questions)
             });
         };
-
 
         $scope.getQuestions();
 
@@ -37,13 +33,27 @@ angular.module('triviaApp').controller('triviaController', function ($scope, tri
         };
 
 
-    $scope.checkAnswer = function (pInd,ind) {
-        if($scope.questions[pInd].correct_answer === ind){
-            $scope.correct = 'green';
-        }else{
-            $scope.correct = 'red';
+    $scope.checkAnswer = function (ind, quest) {
+            quest.selected = true;
+            $scope.optionSelected = true;
+        if(quest.correct_answer === ind+1) {
+            quest.correct = true;
+            $scope.optionSelectedCorrect = true;
+            return;
         }
+           quest.correct = false;
+            $scope.optionSelectedCorrect = false;
     };
 
+    $scope.cancel = function () {
+        $scope.addButton = !$scope.addButton;
+        $scope.Question = '';
+        $scope.Animal = '';
+        $scope.Difficulty = 2;
+        $scope.option1 ='';
+        $scope.option2  = '';
+        $scope.option3 = '';
+        $scope.option4 = '';
+    }
 
 });

@@ -28,20 +28,19 @@
     <button class="nextBack" ng-click="prevPage()"> Previous</button>
     <button class="nextBack" ng-click="nextPage()">Next</button>
   </div>
-  <div ng-repeat="q in questions | filter: diff" ng-click="changeLabel()" class="question-wrapper" >
-      {{label}}
+  <div ng-repeat="q in questions | filter: diff"  class="question-wrapper" ng-class="{'green': q.correct && q.selected, 'red': !q.correct && q.selected}" >
+
     <h3>{{q.question}}</h3>
     <div class="green" ng-show="q.difficulty === 1">Easy</div>
     <div class="yellow" ng-show="q.difficulty === 2">Medium</div>
     <div class="red" ng-show="q.difficulty === 3">Hard</div>
-    <div class="gear">
-      <img src="styles/assets/gear.svg" alt="">
+    <div  class="gear">
+      <img  src="styles/assets/gear.svg" alt="">
     </div>
     <ul>
-      <li ng-repeat="o in q.options"> <!-- Repeated for each option -->
+      <li ng-repeat="o in q.options"  > <!-- Repeated for each option -->
 
-        <label ng-model="label = 5">
-          {{label}}
+        <label class="md-option" ng-click="checkAnswer($index, q)">
           {{o}}
         </label>
       </li>
@@ -53,7 +52,7 @@
 
 <div ng-hide="addButton" class="modal">
   <form>
-    <h4 ng-click="addButton = !addButton" class="close">X</h4>
+    <h4 ng-click="cancel()" class="close">X</h4>
     <span>Question</span><input type="text" ng-model="Question">
     <span>Animal it's about</span><input type="text" ng-model="Animal">
     <span>Difficulty</span>
@@ -64,33 +63,33 @@
     </div>
     <h4>Options</h4>
     <div>
-      <input type="radio" ng-model="dfdf" value="1">
-      <input type="text" ng-model="dfdf">
+      <input type="radio" ng-model="correctAnswer" value="1">
+      <input type="text" ng-model="option1">
     </div>
     <div>
-      <input type="radio" ng-model="dfdf" value="2">
-      <input type="text" ng-model="dfdf">
+      <input type="radio" ng-model="correctAnswer" value="2">
+      <input type="text" ng-model="option2">
     </div>
     <div>
-      <input type="radio" ng-model="dfdf" value="3">
-      <input type="text" ng-model="dfdf">
+      <input type="radio" ng-model="correctAnswer" value="3">
+      <input type="text" ng-model="option3">
     </div>
     <div>
-      <input type="radio" ng-model="dfdf" value="4">
-      <input type="text" ng-model="dfdf">
+      <input type="radio" ng-model="correctAnswer" value="4">
+      <input type="text" ng-model="option4">
     </div>
 
     <!--Add question buttons-->
     <div class="buttons">
-      <button class="green">Save Question</button>
-      <button>Cancel</button>
+      <button ng-click="(obj = {question: Question, animal:Animal, correct_answer: correctAnswer, difficulty: Difficulty, options:{ 1:option1, 2:option2, 3:option3, 4:option4}}) (addQuestion(obj))" class="green">Save Question</button>
+      <button ng-click="cancel()">Cancel</button>
     </div>
 
     <!--Edit & Delete question buttons-->
-    <div class="buttons">
+    <div ng-hide="edit" class="buttons">
       <button class="red">Delete Question</button>
       <button class="green">Save Changes</button>
-      <button>Cancel</button>
+      <button ng-click="cancel()">Cancel</button>
     </div>
 
   </form>
