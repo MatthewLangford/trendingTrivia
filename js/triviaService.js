@@ -15,4 +15,12 @@ angular.module('triviaApp').service('triviaService', function ($http) {
         });
     };
 
+    this.editQuestion = function (question,id) {
+        return $http({
+            method: 'PUT',
+            url: 'https://practiceapi.devmountain.com/api/trivia/questions/:id',
+            data: question
+        })
+    }
+
 });
