@@ -18,8 +18,15 @@ angular.module('triviaApp').service('triviaService', function ($http) {
     this.editQuestion = function (question,id) {
         return $http({
             method: 'PUT',
-            url: 'https://practiceapi.devmountain.com/api/trivia/questions/:id',
+            url: 'https://practiceapi.devmountain.com/api/trivia/questions/'+ id,
             data: question
+        })
+    }
+    
+    this.deleteQuestion = function (id) {
+        return $http({
+            method: 'DELETE',
+            url: 'https://practiceapi.devmountain.com/api/trivia/questions/'+ id
         })
     }
 

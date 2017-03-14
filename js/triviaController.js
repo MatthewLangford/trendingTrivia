@@ -7,6 +7,7 @@ angular.module('triviaApp').controller('triviaController', function ($scope, tri
         $scope.getQuestions = function() {
             triviaService.getQuestions($scope.currentPage).then(function (response) {
                 $scope.questions = response.data;
+                console.log($scope.questions)
             });
         };
 
@@ -14,7 +15,7 @@ angular.module('triviaApp').controller('triviaController', function ($scope, tri
 
         $scope.addQuestion = function (question) {
             triviaService.addQuestion(question).then(function (response) {
-                $scope.questions = response.data;
+                $scope.getQuestions();
                 $scope.addButton = !$scope.addButton;
             });
         };
@@ -39,6 +40,14 @@ angular.module('triviaApp').controller('triviaController', function ($scope, tri
         };
 
         $scope.addQuestionbutton = function () {
+            $scope.Question = '';
+            $scope.Animal = '';
+            $scope.Difficulty = '';
+            $scope.correctAnswer = '';
+            $scope.option1 = '';
+            $scope.option2 = '';
+            $scope.option3 = '';
+            $scope.option4 = '';
             $scope.addButton = false;
             $scope.saveQuest = true;
             $scope.edit = false;
@@ -56,26 +65,31 @@ angular.module('triviaApp').controller('triviaController', function ($scope, tri
             $scope.option2 = $scope.questions[index].options['2'];
             $scope.option3 = $scope.questions[index].options['3'];
             $scope.option4 = $scope.questions[index].options['4'];
-            $scope.editQuestionId = $scope.questions[index].id;
+            $scope.editQuestionId = $scope.questions[index]._id;
         };
 
         $scope.saveChange = function (question) {
             triviaService.editQuestion(question, $scope.editQuestionId).then(function (response) {
-                console.log(response);
-                $scope.questions = response.data;
+                $scope.getQuestions();
                 $scope.addButton = !$scope.addButton;
             })
         };
 
-    $scope.cancel = function () {
-        $scope.addButton = !$scope.addButton;
-        $scope.Question = '';
-        $scope.Animal = '';
-        $scope.Difficulty = 2;
-        $scope.option1 ='';
-        $scope.option2  = '';
-        $scope.option3 = '';
-        $scope.option4 = '';
-    }
+        $scope.deleteQuestion = function () {
+            triviaService.deleteQuestion($scope.editQuestionId).then(function () {
+                $scope.getQuestions();
+                $scope.addButton = !$scope.addButton;
+            })
+        };
 
+        $scope.cancel = function () {
+            $scope.addButton = !$scope.addButton;
+            $scope.Question = '';
+            $scope.Animal = '';
+            $scope.Difficulty = 2;
+            $scope.option1 ='';
+            $scope.option2  = '';
+            $scope.option3 = '';
+            $scope.option4 = '';
+        }
 });

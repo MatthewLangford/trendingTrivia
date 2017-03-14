@@ -28,7 +28,7 @@
     <button class="nextBack" ng-click="prevPage()"> Previous</button>
     <button class="nextBack" ng-click="nextPage()">Next</button>
   </div>
-  <div ng-repeat="q in questions | filter: diff"  class="question-wrapper" ng-class="{'green': q.correct && q.selected, 'red': !q.correct && q.selected}" >
+  <div ng-repeat="q in questions | filter: diff"  class="question-wrapper"  ng-class="{'green': q.correct && q.selected, 'red': !q.correct && q.selected}">
 
     <h3>{{q.question}}</h3>
     <div class="green" ng-show="q.difficulty === 1">Easy</div>
@@ -45,9 +45,7 @@
         </label>
       </li>
     </ul>
-
   </div>
-
 </article>
 
 <div ng-hide="addButton" class="modal">
@@ -81,14 +79,14 @@
 
     <!--Add question buttons-->
     <div ng-show="saveQuest" class="buttons">
-      <button ng-click="(obj = {question: Question, animal:Animal, correct_answer: correctAnswer, difficulty: Difficulty, options:{ 1:option1, 2:option2, 3:option3, 4:option4}}) (addQuestion(obj))" class="green">Save Question</button>
+      <button ng-click="addQuestion({question: Question, animal:Animal, correct_answer: correctAnswer, difficulty: Difficulty, options:{ 1:option1, 2:option2, 3:option3, 4:option4}})" class="green">Save Question</button>
       <button ng-click="cancel()">Cancel</button>
     </div>
 
     <!--Edit & Delete question buttons-->
     <div ng-show="edit" class="buttons">
-      <button class="red">Delete Question</button>
-      <button ng-click="((change = {question: Question, animal:Animal, correct_answer: correctAnswer, difficulty: Difficulty, options:{ 1:option1, 2:option2, 3:option3, 4:option4}}) (saveChange(change)))" class="green">Save Changes</button>
+      <button class="red" ng-click="deleteQuestion()">Delete Question</button>
+      <button ng-click="saveChange({question: Question, animal:Animal, correct_answer: correctAnswer, difficulty: Difficulty, options:{ 1:option1, 2:option2, 3:option3, 4:option4}})" class="green">Save Changes</button>
       <button ng-click="cancel()">Cancel</button>
     </div>
 
